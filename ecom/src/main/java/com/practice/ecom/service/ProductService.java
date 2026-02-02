@@ -1,5 +1,8 @@
 package com.practice.ecom.service;
 
+import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +47,15 @@ public class ProductService {
 		productResponse.setStockQuantity(savedProduct.getStockQuantity());
 		productResponse.setActive(savedProduct.getActive());
 		return productResponse;
+	}
+
+
+	public Optional<ProductResponse> updateProduct(Long id, ProductRequest productRequest) {
+		return productRepository.findById(id).map(existingProduct -> {
+			mapProductFromRequest(existingProduct, productRequest);
+			Product savedProduct = productRepository.save(existingProduct);
+			return mapToProductResponse(savedProduct);
+		});
 	}
 	
 	
