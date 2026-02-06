@@ -1,6 +1,8 @@
 package com.practice.ecom.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,7 @@ import com.practice.ecom.repository.ProductRepository;
 
 @Service
 public class ProductService {
-	
+
 	@Autowired
 	private ProductRepository productRepository;
 
@@ -24,7 +26,6 @@ public class ProductService {
 		Product savedProduct = productRepository.save(product);
 		return mapToProductResponse(savedProduct);
 	}
-	
 
 	private void mapProductFromRequest(Product product, ProductRequest productRequest) {
 		// TODO Auto-generated method stub
@@ -35,7 +36,7 @@ public class ProductService {
 		product.setCategory(productRequest.getCategory());
 		product.setImageUrl(productRequest.getImageUrl());
 	}
-	
+
 	private ProductResponse mapToProductResponse(Product savedProduct) {
 		ProductResponse productResponse = new ProductResponse();
 		productResponse.setId(savedProduct.getId());
@@ -49,7 +50,6 @@ public class ProductService {
 		return productResponse;
 	}
 
-
 	public Optional<ProductResponse> updateProduct(Long id, ProductRequest productRequest) {
 		return productRepository.findById(id).map(existingProduct -> {
 			mapProductFromRequest(existingProduct, productRequest);
@@ -57,9 +57,29 @@ public class ProductService {
 			return mapToProductResponse(savedProduct);
 		});
 	}
-	
-	
-	
-	
+
+	public List<ProductResponse> getAllProducts() {
+		// TODO Auto-generated method stub
+		return productRepository.findByActiveTrue().stream().map(this::mapToProductResponse)
+				.collect(Collectors.toList());
+	}
+
+	public boolean deleteProduct(Long id) {
+		// return productRepository.existsById(id);
+		// return productRepository.findById(id).isPresent();
+		return productRepository.findById(id).map(product -> {
+			product.setActive(false);
+			productRepository.save(product);
+			return true;
+		}).orElse(false);
+	}
+
+	public List<ProductResponse> searchProducts(String keyword) {
+		
+		return productRepository.searchProducts(keyword).stream()
+				.map(this::mapToProductResponse)
+				.collect(Collectors.toList());
+		
+	}
 
 }
