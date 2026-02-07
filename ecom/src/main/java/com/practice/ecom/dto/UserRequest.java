@@ -1,5 +1,6 @@
 package com.practice.ecom.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.practice.ecom.entity.UserRole;
 
 public class UserRequest {
@@ -9,6 +10,7 @@ public class UserRequest {
 	private String email; 
 	private Long phone;
 	private UserRole role;
+	@JsonProperty("userAddress")
 	private AddressDTO address;
 	
 	

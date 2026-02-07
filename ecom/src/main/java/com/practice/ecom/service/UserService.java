@@ -34,12 +34,20 @@ public class UserService {
 				.collect(Collectors.toList()));
 	}
 
-	public void createUser(UserRequest userRequest) {
-		
-		User user = new User();
-		updateUserFromRequest(user, userRequest);
-		userRepository.save(user);
-//		return user;
+//	public void createUser(UserRequest userRequest) {
+//		
+//		User user = new User();
+//		updateUserFromRequest(user, userRequest);
+//		userRepository.save(user);
+////		return user;
+//	}
+	
+	public UserResponse createUser(UserRequest userRequest) {
+	    User user = new User();
+	    updateUserFromRequest(user, userRequest);
+
+	    User savedUser = userRepository.save(user);
+	    return mapToUserResponse(savedUser);
 	}
 	
 
@@ -93,6 +101,7 @@ public class UserService {
 			address.setState(userRequest.getAddress().getState());
 			address.setCountry(userRequest.getAddress().getCountry());
 			user.setUserAddress(address);
+			address.setUser(user);
 			
 		}
 		

@@ -25,12 +25,18 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+//	@PostMapping("/add-user")
+//	public UserRequest createUser(@RequestBody UserRequest userRequest){
+////		System.out.println(user);
+//		userService.createUser(userRequest);
+//		return userRequest;
+//	}
+	
 	@PostMapping("/add-user")
-	public UserRequest createUser(@RequestBody UserRequest userRequest){
-//		System.out.println(user);
-		userService.createUser(userRequest);
-		return userRequest;
+	public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest){
+	    return ResponseEntity.ok(userService.createUser(userRequest));
 	}
+
 	
 	@GetMapping("/users")
 	public ResponseEntity<List<UserResponse>> getUsers(){

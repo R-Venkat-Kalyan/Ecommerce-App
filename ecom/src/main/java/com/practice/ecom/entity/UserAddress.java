@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity(name = "user_address")
 public class UserAddress {
@@ -16,6 +18,10 @@ public class UserAddress {
 	private String state;
 	private String country;
 	private String zipCode;
+	
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	public UserAddress() {
 	}
@@ -76,6 +82,15 @@ public class UserAddress {
 
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	};
 
+	
 }
