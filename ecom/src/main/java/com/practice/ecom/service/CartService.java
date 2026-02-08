@@ -1,7 +1,10 @@
 package com.practice.ecom.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
+
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,6 +78,24 @@ public class CartService {
 			return true;
 		}
 		return false;
+	}
+
+	public List<CartItem> getCartItems(String userId) {
+//		Optional<User> userOpt = userRepository.findById(Long.valueOf(userId));
+//
+//		if (userOpt.isPresent()) {
+//			return cartItemRepository.findCartItemsByUser(userId);
+//		}
+//		return null;
+		return userRepository.findById(Long.valueOf(userId))
+				.map(cartItemRepository::findByUser)
+				.orElseGet(List::of);
+	}
+
+	public void clearCart(String userId) {
+		userRepository.findById(Long.valueOf(userId))
+		.ifPresent(cartItemRepository::deleteByUser);
+		
 	}
 
 }

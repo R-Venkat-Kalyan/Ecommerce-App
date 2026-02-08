@@ -19,9 +19,6 @@ public class UserAddress {
 	private String country;
 	private String zipCode;
 	
-	@OneToOne
-	@JoinColumn(name = "user_id")
-	private User user;
 
 	public UserAddress() {
 	}
@@ -83,14 +80,6 @@ public class UserAddress {
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	};
 
 	
 }

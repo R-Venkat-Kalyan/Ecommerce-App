@@ -101,7 +101,7 @@ public class UserService {
 			address.setState(userRequest.getAddress().getState());
 			address.setCountry(userRequest.getAddress().getCountry());
 			user.setUserAddress(address);
-			address.setUser(user);
+//			address.setUser(user);
 			
 		}
 		
