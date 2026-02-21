@@ -1,30 +1,36 @@
-package com.ecom.user.entity;
+package com.eom.order.entity;
+
+import java.math.BigDecimal;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "user_address")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAddress {
-
+public class OrderItem {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String street;
-	private String city;
-	private String state;
-	private String country;
-	private String zipCode;
 	
+	private String productId;
+	private Integer quantity;
+	private BigDecimal price;
+	
+	@ManyToOne
+	@JoinColumn(name = "order_id", nullable = false)
+	private Order order;
+
 }

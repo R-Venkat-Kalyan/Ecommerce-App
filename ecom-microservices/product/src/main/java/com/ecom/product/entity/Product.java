@@ -1,45 +1,40 @@
-package com.ecom.user.entity;
+package com.ecom.product.entity;
 
-import java.time.LocalDateTime;
-
+import java.math.BigDecimal;
+import java.time.LocalDateTime; 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "user_table")
-@Getter
-@Setter
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+@Getter
+@Setter
+public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private String email;
-	private Long phone;
-	private UserRole role = UserRole.CUSTOMER;
-
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "address_id", referencedColumnName = "id")
-	private UserAddress userAddress;
+	private String description;
+	private BigDecimal price;
+	private Integer stockQuantity;
+	private String category;
+	private String imageUrl;
+	private Boolean active = true;
 	
 	@CreationTimestamp
 	private LocalDateTime createdAt;
-	
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
+
 
 }
