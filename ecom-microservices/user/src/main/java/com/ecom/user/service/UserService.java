@@ -1,20 +1,17 @@
 package com.ecom.user.service;
 
-import java.util.ArrayList;
-
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ecom.user.dto.AddressDTO;
 import com.ecom.user.dto.UserRequest;
 import com.ecom.user.dto.UserResponse;
-import com.ecom.user.entity.User;
+import com.ecom.user.entity.Users;
 import com.ecom.user.entity.UserAddress;
 import com.ecom.user.repository.UserRepository;
 
@@ -47,26 +44,26 @@ public class UserService {
 //	}
 	
 	public UserResponse createUser(UserRequest userRequest) {
-	    User user = new User();
+	    Users user = new Users();
 	    updateUserFromRequest(user, userRequest);
 
-	    User savedUser = userRepository.save(user);
+	    Users savedUser = userRepository.save(user);
 	    return mapToUserResponse(savedUser);
 	}
 	
 
-	public ResponseEntity<Optional<UserResponse>> getUser(Long id) {
+	public ResponseEntity<Optional<UserResponse>> getUser(String id) {
 //	    for (User user : usersList) {
 //	        if (user.getId().equals(id)) {
 //	            return ResponseEntity.ok(user);
 //	        }
 //	    }
 //	    return ResponseEntity.notFound().build();
-		return ResponseEntity.ok(userRepository.findById(id)
+		return ResponseEntity.ok(userRepository.findById(String.valueOf(id))
 				.map(this::mapToUserResponse));
 	}
 	
-	public ResponseEntity<String> updateUser(Long id, UserRequest updatedUserRequest){
+	public ResponseEntity<String> updateUser(String id, UserRequest updatedUserRequest){
 //		for(User user: usersList) {
 //			if(user.getId().equals(id)) {
 //				user.setEmail(updatedUser.getEmail());
@@ -76,13 +73,13 @@ public class UserService {
 //			}	
 //		}
 //		return ResponseEntity.notFound().build();
-		Optional<User> existing = userRepository.findById(id);
+		Optional<Users> existing = userRepository.findById(String.valueOf(id));
 
 	    if(existing.isEmpty()) {
 	        return ResponseEntity.notFound().build();
 	    }
 
-	    User user = existing.get();
+	    Users user = existing.get();
 	    user.setName(updatedUserRequest.getName());
 	    user.setEmail(updatedUserRequest.getEmail());
 	    user.setPhone(updatedUserRequest.getPhone());
@@ -92,7 +89,7 @@ public class UserService {
 	    return ResponseEntity.ok("Updated Successfully");
 	}
 	
-	private void updateUserFromRequest(User user, UserRequest userRequest) {
+	private void updateUserFromRequest(Users user, UserRequest userRequest) {
 		// TODO Auto-generated method stub
 		user.setName(userRequest.getName());
 		user.setEmail(userRequest.getEmail());
@@ -111,7 +108,7 @@ public class UserService {
 		
 	}
 	
-	private UserResponse mapToUserResponse(User user) {
+	private UserResponse mapToUserResponse(Users user) {
 		UserResponse response = new UserResponse();
 		response.setId(String.valueOf(user.getId()));
 		response.setName(user.getName());

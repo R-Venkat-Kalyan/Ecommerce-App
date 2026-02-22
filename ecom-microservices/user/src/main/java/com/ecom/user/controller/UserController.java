@@ -45,12 +45,12 @@ public class UserController {
 	}
 
 	@GetMapping("/users/{id}")
-	public ResponseEntity<Optional<UserResponse>> getUser(@PathVariable Long id) {
+	public ResponseEntity<Optional<UserResponse>> getUser(@PathVariable String id) {
 		return userService.getUser(id);
 	}
 
 	@PutMapping("/update-user/{id}")
-	public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UserRequest updatedUserRequest) {
+	public ResponseEntity<String> updateUser(@PathVariable String id, @RequestBody UserRequest updatedUserRequest) {
 		return userService.updateUser(id, updatedUserRequest);
 	}
 

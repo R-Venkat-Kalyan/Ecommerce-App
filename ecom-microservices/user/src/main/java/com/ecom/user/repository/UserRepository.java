@@ -1,8 +1,8 @@
 package com.ecom.user.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import com.ecom.user.entity.User;
+import com.ecom.user.entity.Users;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends MongoRepository<Users, String> {
 
 }
